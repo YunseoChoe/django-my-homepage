@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <div class="container">
+        <label>username:</label><input id="username" type="id" placeholder="id를 입력해주세요." required><br>
+        <label>password:</label><input id="password" type="id" placeholder="password 입력해주세요." required><br>
+        <button id="button" type="submit">제출</button>
+    </div>
+
+    <script>
+        const username = document.querySelector("#username");
+        const password = document.querySelector("#password");
+
+        const loginbutton = document.querySelector("#button");
+
+        loginbutton.addEventListener("click", login);
+
+        function login() {
+            const request = {
+                username : username.value,
+                password : password.value,
+            }
+            fetch("http://127.0.0.1:8000/accounts/login/", {
+                withCredentials: true, // cookie 값 전달
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request) // json형식으로 보냄
+            })
+        }
+    </script>
+</body>
+</html>

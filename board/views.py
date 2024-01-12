@@ -28,5 +28,5 @@ class BoardCreateAPIView(APIView):
 # read 
 
 # update
-    
+
 # delete

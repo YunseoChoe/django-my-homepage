@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import HttpResponse
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
 User = get_user_model()
 
 # 회원가입
@@ -25,5 +27,14 @@ class LoginAPIView(APIView):
         if user is None:
             return Response({'error': 'Invalid username or password.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        response = HttpResponse("success login!")
+        # jwt 발급
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+
+        response = HttpResponse("로그인 성공")
+        
+        response.set_cookie('access_token', access_token, httponly=True)
+        response.set_cookie('refresh_token', refresh_token, httponly=True)
+
         return response
