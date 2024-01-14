@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>board_create</title>
+</head>
+<body>
+    <div class="container">
+        <label>title:</label><input id="title" type="id" placeholder="제목을 입력해주세요." required><br>
+        <label>content:</label><input id="content" type="content" placeholder="내용을 입력해주세요."><br>
+        <label>writer:</label><input id="writer" type="id" placeholder="작성자를 입력해주세요."><br>
+        <button id="button" type="submit">제출</button>
+    </div>
+
+    <script>
+        const title = document.querySelector("#title");
+        const content = document.querySelector("#content");
+        const writer = document.querySelector("#writer");
+        
+        const signupbutton = document.querySelector("#button");
+        
+        signupbutton.addEventListener("click", sign);
+
+        function sign() {
+            const request = {
+                title : title.value,
+                content : content.value,
+                writer : writer.value
+            }
+            // fecth()
+            fetch("http://127.0.0.1:8000/board/boardcreate/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request) // json형식으로 보냄
+            })
+        }
+
+    </script>
+</body>
+</html>
