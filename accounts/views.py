@@ -32,7 +32,7 @@ class LoginAPIView(APIView):
         access_token = str(refresh.access_token)
         refresh_token = str(refresh)
 
-        response = HttpResponse("로그인 성공")
+        response = HttpResponse("로그인 성공!")
         
         response.set_cookie('access_token', access_token, httponly=True)
         response.set_cookie('refresh_token', refresh_token, httponly=True)

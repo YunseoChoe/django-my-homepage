@@ -20,24 +20,15 @@ class BoardCreateAPIView(APIView):
         board_instance = Board(title=title, content=content, writer=writer)
 
         # 모델 인스턴스를 데이터베이스에 저장
-        board_instance.save()
+        board_instance.save() # save()는 django에서 제공해주는 메서드
 
         # (저장된 데이터를 시리얼라이저를 통해 응답)
         # 생성된 Board 객체를 시리얼라이저의 인스턴스로 전달하고,
         # serializer.data를 통해 시리얼라이저화된 데이터를 가져온 후 응답
         serializer = BoardSerializers(board_instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-# 
-    
-# read 
 
 # update
-
-# delete
-
-# delete
-
-# read 
 
 # update
 class BoardUpdateAPIView(APIView):
@@ -61,7 +52,7 @@ class BoardUpdateAPIView(APIView):
         if writer:
             board_instance.writer = writer
         # 모델 인스턴스를 데이터베이스에 저장
-        board_instance.save()
+        board_instance.save() # save()는 django에서 제공해주는 메서드
 
         # 시리얼라이저를 통해 응답
         serializer = BoardSerializers(board_instance)
@@ -69,8 +60,22 @@ class BoardUpdateAPIView(APIView):
 
 # delete
 class BoardDeleteAPIView(APIView):
+    # <DELETE 요청을 처리하는 역할>
     def delete(elf, request, pk):
-        pass
+        try:
+            # 게시판을 찾음
+            board_instance = Board.objects.get(pk=pk)
+        except Board.DoesNotExist:
+            return Response({"message": "게시판이 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+        
+        # 게시판 삭제
+        board_instance.delete() # delete()는 django에서 제공해주는 메서드
+
+        response = HttpResponse("게시판이 삭제되었습니다.")
+        # return Response({"message": "게시판이 삭제되었습니다."}, status=status.HTTP_204_NO_CONTENT)
+        return response
+
+# read 
 
 
 
