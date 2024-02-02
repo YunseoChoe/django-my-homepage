@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>board_create</title>
+    <title>게시판 작성</title>
 </head>
 <body>
     <div class="container">
@@ -20,16 +20,16 @@
         
         const signupbutton = document.querySelector("#button");
         
-        signupbutton.addEventListener("click", sign);
+        signupbutton.addEventListener("click", board_create);
 
-        function sign() {
+        function board_create() {
             const request = {
                 title : title.value,
                 content : content.value,
                 writer : writer.value
             }
             // fecth()
-            fetch("http://127.0.0.1:8000/board/boardcreate/", {
+            fetch("http://127.0.0.1:8000/board/board_create/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

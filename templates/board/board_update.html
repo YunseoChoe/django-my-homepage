@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 수정</title>
+</head>
+<body>
+    <div class="container">
+        <label>title:</label><input id="title" type="id" placeholder="제목을 입력해주세요." required><br>
+        <label>content:</label><input id="content" type="content" placeholder="내용을 입력해주세요."><br>
+        <label>writer:</label><input id="writer" type="id" placeholder="작성자를 입력해주세요."><br>
+        <button id="button" type="submit">수정</button>
+    </div>
+
+    <script>
+        const title = document.querySelector("#title");
+        const content = document.querySelector("#content");
+        const writer = document.querySelector("#writer");
+        
+        const submitButton = document.querySelector("#button");
+        
+        submitButton.addEventListener("click", board_update);
+
+        function board_update() {
+            const request = {
+                title: title.value,
+                content: content.value,
+                writer: writer.value
+            }
+            // board_update/<int:pk>/
+            fetch("http://127.0.0.1:8000/board/board_update/6/", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request)
+            })
+        }
+    </script>
+</body>
+</html>

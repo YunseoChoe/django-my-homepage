@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시판 삭제</title>
+</head>
+<body>
+    <h1>게시판 삭제</h1>
+    <form id="delete-form">
+        <label for="board-id">게시물 ID:</label>
+        <input type="text" id="board-id" name="board-id">
+        <button id="button" type="submit">삭제</button>
+    </form>
+
+    <script>
+        const submitButton = document.querySelector("#button");
+        submitButton.addEventListener("click", board_delete);
+
+        function board_delete() {
+            var boardId = document.getElementById("board-id").value;
+            
+            // 게시물 삭제 API 호출
+            fetch("http://127.0.0.1:8000/board/board_delete/" + boardId + "/", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function(response) {
+                if (response.ok) {
+                    alert("게시물이 삭제되었습니다.");
+                    // 삭제 후 필요한 작업 수행
+                } else {
+                    alert("게시물 삭제에 실패했습니다.");
+                }
+            }).catch(function(error) {
+                console.log(error);
+                alert("게시물 삭제 중 오류가 발생했습니다.");
+            });
+        }
+    </script>
+</body>
+</html>
