@@ -61,7 +61,7 @@ class BoardUpdateAPIView(APIView):
 # delete
 class BoardDeleteAPIView(APIView):
     # <DELETE 요청을 처리하는 역할>
-    def delete(elf, request, pk):
+    def delete(self, request, pk):
         try:
             # 게시판을 찾음
             board_instance = Board.objects.get(pk=pk)
@@ -71,11 +71,28 @@ class BoardDeleteAPIView(APIView):
         # 게시판 삭제
         board_instance.delete() # delete()는 django에서 제공해주는 메서드
 
-        response = HttpResponse("게시판이 삭제되었습니다.")
-        # return Response({"message": "게시판이 삭제되었습니다."}, status=status.HTTP_204_NO_CONTENT)
-        return response
+        # response = HttpResponse("게시판이 삭제되었습니다.")
+        # return response
+        return Response({"message": "게시판이 삭제되었습니다."}, status=status.HTTP_204_NO_CONTENT)
 
 # read 
+class BoardReadAPIView(APIView):
+    # <GET 요청을 처리하는 역할>
+    def get(self, request, pk):
+        try:
+            # 게시판을 찾음
+            board_instance = Board.objects.get(pk=pk)
+        except Board.DoesNotExist:
+            return Response({"message": "게시판이 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+        
+        # 게시판 조회
+        response_data = {
+            "title": board_instance.title,
+            "content": board_instance.content,
+            "writer": board_instance.writer,
+        }
+        
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
 
@@ -84,9 +101,9 @@ Django REST Framework에서는 HTTP 요청 방식에 따라 메서드 이름을 
 
 일반적으로 RESTful API에서는 다음과 같은 HTTP 요청 방식과 메서드의 관계가 있습니다:
 
-GET: 리소스의 조회. 일반적으로 get 메서드로 처리합니다.
-POST: 새로운 리소스의 생성. 일반적으로 create 메서드로 처리합니다.
-PUT: 리소스의 전체적인 수정. 일반적으로 update 메서드로 처리합니다.
-PATCH: 리소스의 일부 수정. 일반적으로 partial_update 메서드로 처리합니다.
-DELETE: 리소스의 삭제. 일반적으로 destroy 메서드로 처리합니다.
+GET: 리소스의 조회. 일반적으로 get 메서드로 처리합니다. read
+POST: 새로운 리소스의 생성. 일반적으로 create 메서드로 처리합니다. creat
+PUT: 리소스의 전체적인 수정. 일반적으로 update 메서드로 처리합니다. update
+PATCH: 리소스의 일부 수정. 일반적으로 partial_update 메서드로 처리합니다. update
+DELETE: 리소스의 삭제. 일반적으로 destroy 메서드로 처리합니다. delete
 '''
